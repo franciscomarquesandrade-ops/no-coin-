@@ -1,48 +1,152 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <title>Modelo de Jogo — Jogos VR</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="app">
-      <header class="top">
-        <div>
-          <span class="kicker">Modelo</span>
-          <h1 id="title">Clique no Alvo</h1>
-          <p class="subtitle">Troque este jogo pelo seu. O contrato já está pronto.</p>
-        </div>
-        <button id="restart" class="btn" type="button">Reiniciar</button>
-      </header>
-
-      <main>
-        <div class="hud">
-          <span class="pill">Alvos: <strong id="score">0</strong>/<span id="total">10</span></span>
-          <span class="pill">Tempo: <strong id="timer">0,0s</strong></span>
-        </div>
-
-        <div id="board" class="board" aria-label="Área do jogo">
-          <p id="start-hint" class="start-hint">Clique no alvo para começar</p>
-        </div>
-      </main>
-
-      <footer class="bottom">
-        <p>Este é o arquivo <code>game.js</code>. Leia os comentários e adapte.</p>
-      </footer>
-    </div>
-
-    <div id="result" class="overlay" hidden>
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="result-title">
-        <div class="modal-icon" aria-hidden="true">🎯</div>
-        <h2 id="result-title">Muito bem!</h2>
-        <p id="result-text">Você concluiu o jogo.</p>
-        <button id="play-again" class="btn btn-primary full" type="button">Jogar de novo</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Coin — Pensamento Computacional</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container" id="app">
+    <!-- Cabeçalho do jogo com título, botão de tema e placar -->
+    <header class="topo">
+      <div class="titulo-area">
+        <h1>No Coin</h1>
+        <span class="subtitulo">Lógica nos Trilhos • Pensamento Computacional</span>
       </div>
-    </div>
+      <div class="acoes-topo">
+        <button id="btn-tema" class="btn-secundario" type="button" aria-label="Alternar tema claro ou escuro">
+          🌓 Tema
+        </button>
+      </div>
+    </header>
 
-    <script src="game.js"></script>
-  </body>
+    <!-- Painel de informações da rodada, pontos e tempo -->
+    <section class="painel-status" aria-label="Informações da partida">
+      <div class="stat">
+        <span class="stat-label">Rodada</span>
+        <strong id="texto-rodada">1 / 10</strong>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Pontos</span>
+        <strong id="texto-pontos">0</strong>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Tempo</span>
+        <strong id="texto-tempo">0s</strong>
+      </div>
+    </section>
+
+    <!-- Tela inicial antes de começar -->
+    <section id="tela-inicio" class="cartao tela-ativa">
+      <h2>Como jogar No Coin</h2>
+      <p>
+        Você está correndo por <strong>3 trilhos de trem</strong>. A cada rodada, leia a regra
+        <strong>"Se... então..."</strong> no painel acima da pista antes que o trem ou a barreira chegue!
+      </p>
+      <ul class="lista-regras">
+        <li><strong>⬅️ Esquerda / ➡️ Direita:</strong> muda de trilho para fugir de vagões ou pegar o dado certo.</li>
+        <li><strong>⬆️ Pular:</strong> salta por cima de barreiras baixas e moedas armadilha ("No Coin!").</li>
+        <li><strong>⬇️ Deslizar:</strong> passa por baixo de placas e vigas altas.</li>
+      </ul>
+      <p class="dica-controles">
+        No computador use as <strong>Setas</strong> ou <strong>W A S D</strong>. No celular, toque nos botões grandes abaixo da pista.
+      </p>
+      <button id="btn-comecar" class="btn-principal" type="button">
+        Começar Corrida
+      </button>
+    </section>
+
+    <!-- Área principal da corrida -->
+    <section id="tela-jogo" class="escondido" aria-live="polite">
+      <!-- Regra lógica da rodada -->
+      <div class="caixa-regra" id="caixa-regra">
+        <span class="etiqueta-regra">REGRA LÓGICA</span>
+        <p id="texto-regra">Carregando desafio...</p>
+      </div>
+
+      <!-- Pista com 3 trilhos de trem -->
+      <div class="pista-wrapper">
+        <div class="pista" id="pista">
+          <!-- Trilho 0: Esquerda | Trilho 1: Centro | Trilho 2: Direita -->
+          <div class="trilho" data-trilho="0">
+            <div class="dormentes"></div>
+            <div class="trilho-ferro esquerdo"></div>
+            <div class="trilho-ferro direito"></div>
+          </div>
+          <div class="trilho" data-trilho="1">
+            <div class="dormentes"></div>
+            <div class="trilho-ferro esquerdo"></div>
+            <div class="trilho-ferro direito"></div>
+          </div>
+          <div class="trilho" data-trilho="2">
+            <div class="dormentes"></div>
+            <div class="trilho-ferro esquerdo"></div>
+            <div class="trilho-ferro direito"></div>
+          </div>
+
+          <!-- Obstáculos e itens que descem na pista -->
+          <div id="camada-objetos" class="camada-objetos"></div>
+
+          <!-- Personagem corredor -->
+          <div id="jogador" class="jogador" data-trilho="1" data-acao="correndo" aria-label="Personagem no trilho do meio">
+            <div class="jogador-corpo">
+              <span class="jogador-icone">🏃</span>
+              <span class="jogador-estado" id="estado-jogador">CORRENDO</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra de tempo da rodada -->
+        <div class="barra-progresso-fundo" aria-hidden="true">
+          <div id="barra-progresso" class="barra-progresso-preenchimento"></div>
+        </div>
+      </div>
+
+      <!-- Mensagem rápida de acerto/erro entre rodadas -->
+      <div id="feedback-rapido" class="feedback-rapido escondido"></div>
+
+      <!-- Controles grandes (mínimo 44px) para celular e clique -->
+      <div class="controles" role="group" aria-label="Controles de movimento">
+        <button id="btn-esquerda" class="btn-controle" type="button" aria-label="Ir para a esquerda (Tecla A ou Seta Esquerda)">
+          ⬅️ Esquerda
+        </button>
+        <div class="controles-verticais">
+          <button id="btn-pular" class="btn-controle" type="button" aria-label="Pular (Tecla W ou Seta Cima)">
+            ⬆️ Pular
+          </button>
+          <button id="btn-deslizar" class="btn-controle" type="button" aria-label="Deslizar (Tecla S ou Seta Baixo)">
+            ⬇️ Deslizar
+          </button>
+        </div>
+        <button id="btn-direita" class="btn-controle" type="button" aria-label="Ir para a direita (Tecla D ou Seta Direita)">
+          Direita ➡️
+        </button>
+      </div>
+    </section>
+
+    <!-- Tela de resultado final ou fim de jogo -->
+    <section id="tela-fim" class="cartao escondido">
+      <h2 id="titulo-fim">Fim de Jogo!</h2>
+      <p id="motivo-fim" class="motivo-fim"></p>
+
+      <div class="resumo-final">
+        <div><span>Rodadas concluídas:</span> <strong id="final-rodadas">0</strong></div>
+        <div><span>Pontuação final:</span> <strong id="final-pontos">0</strong></div>
+        <div><span>Tempo total:</span> <strong id="final-tempo">0s</strong></div>
+      </div>
+
+      <div class="botoes-fim">
+        <button id="btn-infinito" class="btn-secundario escondido" type="button">
+          ♾️ Continuar no Modo Infinito
+        </button>
+        <button id="btn-reiniciar" class="btn-principal" type="button">
+          🔄 Jogar Novamente
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
 </html>

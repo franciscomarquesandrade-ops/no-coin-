@@ -1,16 +1,16 @@
 {
-  "slug": "meu-jogo",
-  "title": "Nome do meu jogo",
-  "author": "Seu nome",
-  "authorClass": "Sua turma",
-  "discipline": "Matemática",
-  "grades": ["6º", "7º"],
-  "tags": ["palavra-chave", "outra-palavra"],
-  "description": "Uma frase curta que explica o que o jogo ensina.",
-  "instructions": "Como jogar, em uma ou duas frases.",
-  "duration": 5,
+  "slug": "no-coin",
+  "title": "No Coin",
+  "author": "Francisco",
+  "authorClass": "9C",
+  "discipline": "Pensamento Computacional",
+  "grades": ["6º ano", "7º ano", "8º ano", "9º ano"],
+  "tags": ["pensamento computacional", "lógica", "condicionais", "algoritmos", "corrida"],
+  "description": "Corra pelos 3 trilhos de trem lendo regras lógicas 'Se... então...' para pular, deslizar e desviar de obstáculos e moedas armadilha.",
+  "instructions": "Leia a regra no painel superior antes que o obstáculo chegue. Use as setas do teclado, as teclas W A S D ou toque nos botões na tela para ir para a esquerda, direita, pular ou deslizar.",
+  "duration": "2-4 min",
   "version": "1.0.0",
   "entry": "index.html",
   "cover": "cover.svg",
-  "createdAt": "2026-11-02"
+  "createdAt": "2026-11-24"
 }

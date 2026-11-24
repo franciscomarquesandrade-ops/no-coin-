@@ -1,259 +1,486 @@
+/* Variáveis de cores para Tema Claro e Tema Escuro */
 :root {
-  --bg: #f1f5f9;
-  --panel: #ffffff;
-  --panel-2: #f8fafc;
-  --ink: #0f172a;
-  --muted: #64748b;
-  --line: #e2e8f0;
-  --brand: #2563eb;
-  --brand-ink: #ffffff;
-  --accent: #f59e0b;
-  --correct: #16a34a;
-  --shadow: 0 10px 30px rgb(15 23 42 / 0.08);
+  --bg-pagina: #f1f5f9;
+  --bg-cartao: #ffffff;
+  --texto-principal: #0f172a;
+  --texto-secundario: #475569;
+  --borda: #cbd5e1;
+  --destaque: #2563eb;
+  --destaque-hover: #1d4ed8;
+  --cor-pista: #e2e8f0;
+  --cor-madeira: #94a3b8;
+  --cor-trilho: #334155;
+  --cor-acerto: #16a34a;
+  --cor-erro: #dc2626;
+  --cor-aviso: #d97706;
+  --sombra: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
 [data-theme="dark"] {
-  --bg: #0b1120;
-  --panel: #111827;
-  --panel-2: #0f172a;
-  --ink: #f8fafc;
-  --muted: #94a3b8;
-  --line: #1f2937;
-  --brand: #3b82f6;
-  --brand-ink: #ffffff;
-  --accent: #fbbf24;
-  --correct: #22c55e;
-  --shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+  --bg-pagina: #0f172a;
+  --bg-cartao: #1e293b;
+  --texto-principal: #f8fafc;
+  --texto-secundario: #cbd5e1;
+  --borda: #334155;
+  --destaque: #3b82f6;
+  --destaque-hover: #60a5fa;
+  --cor-pista: #0b1120;
+  --cor-madeira: #334155;
+  --cor-trilho: #64748b;
+  --cor-acerto: #22c55e;
+  --cor-erro: #ef4444;
+  --cor-aviso: #f59e0b;
+  --sombra: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 * {
   box-sizing: border-box;
-}
-
-html,
-body {
   margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-.app {
-  width: min(760px, 100%);
-  margin: 0 auto;
-  padding: clamp(14px, 3vw, 26px);
-}
-
-.top {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-pagina);
+  color: var(--texto-principal);
+  line-height: 1.5;
+  padding: 12px;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
+  justify-content: center;
 }
 
-.kicker {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--brand);
-}
-
-h1 {
-  margin: 4px 0 0;
-  font-size: clamp(22px, 4.6vw, 30px);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.subtitle {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.btn {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--ink);
-  border-radius: 10px;
-  padding: 9px 13px;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.btn:hover {
-  border-color: var(--brand);
-}
-
-.btn-primary {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: var(--brand-ink);
-}
-
-.btn.full {
+.container {
   width: 100%;
-  margin-top: 16px;
-}
-
-.hud {
+  max-width: 680px;
   display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.pill {
-  display: inline-flex;
-  gap: 4px;
+.escondido {
+  display: none !important;
+}
+
+/* Cabeçalho */
+.topo {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  border-radius: 999px;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 6px 11px;
-  font-size: 12px;
+  background: var(--bg-cartao);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--borda);
+  box-shadow: var(--sombra);
+}
+
+.titulo-area h1 {
+  font-size: 1.4rem;
+  color: var(--destaque);
+}
+
+.subtitulo {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+}
+
+/* Botões com tamanho mínimo de 44px para celular */
+button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
-.pill strong {
-  color: var(--ink);
+button:active {
+  transform: scale(0.97);
 }
 
-.board {
+.btn-principal {
+  background-color: var(--destaque);
+  color: #ffffff;
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+.btn-principal:hover {
+  background-color: var(--destaque-hover);
+}
+
+.btn-secundario {
+  background-color: transparent;
+  color: var(--texto-principal);
+  border-color: var(--borda);
+}
+
+.btn-secundario:hover {
+  border-color: var(--destaque);
+}
+
+/* Painel de placar */
+.painel-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat {
+  background: var(--bg-cartao);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+}
+
+.stat strong {
+  font-size: 1.2rem;
+}
+
+/* Cartões de Início e Fim */
+.cartao {
+  background: var(--bg-cartao);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lista-regras {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dica-controles {
+  font-size: 0.92rem;
+  color: var(--texto-secundario);
+  background: var(--bg-pagina);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Caixa da Regra Lógica */
+.caixa-regra {
+  background: var(--bg-cartao);
+  border: 2px solid var(--destaque);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  text-align: center;
+  box-shadow: var(--sombra);
+}
+
+.etiqueta-regra {
+  display: inline-block;
+  background: var(--destaque);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+#texto-regra {
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+/* Pista com 3 Trilhos de Trem */
+.pista-wrapper {
+  background: var(--bg-cartao);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: var(--sombra);
+}
+
+.pista {
   position: relative;
-  height: min(58vh, 420px);
-  min-height: 300px;
+  height: 290px;
+  background-color: var(--cor-pista);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--panel);
-  box-shadow: var(--shadow);
+  border: 2px solid var(--borda);
 }
 
-.start-hint {
+.trilho {
+  position: relative;
+  border-right: 1px dashed var(--borda);
+  height: 100%;
+}
+
+.trilho:last-child {
+  border-right: none;
+}
+
+/* Desenho dos dormentes de madeira e trilhos de ferro */
+.dormentes {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 18px,
+    var(--cor-madeira) 18px,
+    var(--cor-madeira) 26px
+  );
+  opacity: 0.45;
+  animation: moverTrilhos 0.7s linear infinite;
 }
 
-.target {
+.trilho-ferro {
   position: absolute;
-  width: 64px;
-  height: 64px;
-  border: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, #ffffff 0 18%, var(--accent) 19% 40%, #ffffff 41% 52%, var(--brand) 53% 100%);
-  box-shadow: 0 6px 16px rgb(37 99 235 / 0.35);
-  cursor: pointer;
-  animation: pop 0.18s ease;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background-color: var(--cor-trilho);
 }
 
-.target:active {
-  transform: scale(0.94);
+.trilho-ferro.esquerdo {
+  left: 24%;
 }
 
-@keyframes pop {
+.trilho-ferro.direito {
+  right: 24%;
+}
+
+@keyframes moverTrilhos {
   from {
-    transform: scale(0.6);
-    opacity: 0;
+    background-position-y: 0;
   }
   to {
-    transform: scale(1);
-    opacity: 1;
+    background-position-y: 26px;
   }
 }
 
-.bottom {
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 12px;
-  text-align: center;
-}
-
-code {
-  background: var(--panel-2);
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 1px 5px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 11px;
-}
-
-.overlay {
-  position: fixed;
+/* Obstáculos e Moedas Armadilha na pista */
+.camada-objetos {
+  position: absolute;
   inset: 0;
-  z-index: 50;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  background: rgb(2 6 23 / 0.55);
-  backdrop-filter: blur(6px);
+  pointer-events: none;
 }
 
-.overlay[hidden] {
-  display: none;
-}
-
-.modal {
-  width: min(360px, 100%);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 26px;
+.objeto-pista {
+  position: absolute;
+  width: 31%;
+  padding: 6px 4px;
+  border-radius: 8px;
   text-align: center;
-  box-shadow: 0 30px 80px rgb(0 0 0 / 0.35);
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  transform: translateX(-50%);
 }
 
-.modal-icon {
-  font-size: 40px;
+.objeto-vagao {
+  background-color: #b91c1c;
+  border: 2px solid #fca5a5;
 }
 
-.modal h2 {
-  margin: 8px 0 0;
-  font-size: 22px;
+.objeto-barreira-baixa {
+  background-color: #d97706;
+  border: 2px solid #fde68a;
 }
 
-.modal p {
-  margin: 8px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
+.objeto-viga-alta {
+  background-color: #7c3aed;
+  border: 2px solid #ddd6fe;
 }
 
-@media (min-width: 700px) {
-  html.is-fullscreen .app,
-  html.is-standalone .app {
-    width: min(1000px, 100%);
-  }
-
-  html.is-fullscreen .board,
-  html.is-standalone .board {
-    height: min(68vh, 560px);
-  }
+.objeto-no-coin {
+  background-color: #dc2626;
+  border: 2px dashed #fef08a;
 }
 
+.objeto-dado-certo {
+  background-color: #15803d;
+  border: 2px solid #bbf7d0;
+}
+
+/* Personagem Corredor */
+.jogador {
+  position: absolute;
+  bottom: 14px;
+  width: 30%;
+  transform: translateX(-50%);
+  transition: left 0.16s ease-out, transform 0.16s ease-out;
+  z-index: 5;
+}
+
+.jogador[data-trilho="0"] {
+  left: 16.66%;
+}
+
+.jogador[data-trilho="1"] {
+  left: 50%;
+}
+
+.jogador[data-trilho="2"] {
+  left: 83.33%;
+}
+
+.jogador-corpo {
+  background-color: var(--destaque);
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  padding: 6px 4px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.jogador-icone {
+  display: block;
+  font-size: 1.45rem;
+}
+
+.jogador-estado {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+/* Estados visuais de pular e deslizar */
+.jogador[data-acao="pulando"] {
+  transform: translateX(-50%) translateY(-22px) scale(1.08);
+}
+
+.jogador[data-acao="pulando"] .jogador-corpo {
+  background-color: #16a34a;
+}
+
+.jogador[data-acao="deslizando"] {
+  transform: translateX(-50%) scaleY(0.68) translateY(12px);
+}
+
+.jogador[data-acao="deslizando"] .jogador-corpo {
+  background-color: #7c3aed;
+}
+
+/* Barra de tempo da rodada */
+.barra-progresso-fundo {
+  height: 10px;
+  background: var(--cor-pista);
+  border-radius: 999px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.barra-progresso-preenchimento {
+  height: 100%;
+  width: 100%;
+  background: var(--destaque);
+  transition: width 0.08s linear;
+}
+
+/* Feedback curto entre rodadas */
+.feedback-rapido {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.feedback-acerto {
+  background-color: rgba(22, 163, 74, 0.16);
+  color: var(--cor-acerto);
+  border: 1px solid var(--cor-acerto);
+}
+
+.feedback-erro {
+  background-color: rgba(220, 38, 38, 0.16);
+  color: var(--cor-erro);
+  border: 1px solid var(--cor-erro);
+}
+
+/* Botões de controle (mínimo 44px de altura e largura) */
+.controles {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.controles-verticais {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-controle {
+  min-height: 52px;
+  background-color: var(--bg-cartao);
+  color: var(--texto-principal);
+  border: 2px solid var(--borda);
+  box-shadow: var(--sombra);
+}
+
+.btn-controle:hover,
+.btn-controle:focus-visible {
+  border-color: var(--destaque);
+  background-color: var(--destaque);
+  color: #ffffff;
+}
+
+/* Resumo final */
+.motivo-fim {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg-pagina);
+  font-weight: 600;
+}
+
+.resumo-final {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+}
+
+.resumo-final div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.botoes-fim {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Respeita a preferência do usuário por menos animação */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
+  .dormentes {
+    animation: none;
+  }
+
+  .jogador,
+  button,
+  .barra-progresso-preenchimento {
+    transition: none;
   }
 }
